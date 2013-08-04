@@ -1,0 +1,15 @@
+{
+  "name": "Ticker",
+  "version": "0.0.0",
+  "main": "Ticker.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "EventEmitter": "~0.0.0"
+  }
+}
