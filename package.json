@@ -1,0 +1,21 @@
+{
+  "name": "Ticker",
+  "version": "0.0.1",
+  "description": "animation keyframe with EventEmitter",
+  "main": "Ticker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fnobi/Ticker.git"
+  },
+  "author": "Fujisawa Shin",
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "gitHead": "3514dff9acf322c9a10d4e0f0501b0bef48524d5",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-release": "~0.5.1"
+  }
+}
