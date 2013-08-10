@@ -4,8 +4,7 @@ module.exports = function(grunt) {
         release: {
             options: {
                 file: 'bower.json',
-                npm: false,
-                tagMessage: '<%= version %>'
+                npm: false
             }
         }
     });
