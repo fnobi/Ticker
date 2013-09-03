@@ -1,5 +1,8 @@
 var Ticker = function (opts) {
     this.clock = opts.clock || 20;
+
+    this.periods = {};
+
     this.initLoop();
 };
 inherits(Ticker, EventEmitter);
@@ -10,9 +13,11 @@ Ticker.prototype.initLoop = function () {
 
 Ticker.prototype.start = function () {
     var self = this;
+    
+    this.counter = 0;
 
     this.loop = setInterval(function () {
-        self.emit('tick');
+        self.processTick();
     }, this.clock);
 };
 
@@ -22,4 +27,40 @@ Ticker.prototype.stop = function () {
     }
     clearInterval(this.loop);
     this.initLoop();
+};
+
+Ticker.prototype.processTick = function () {
+    var periods = this.periods;
+    var counter = this.counter + this.clock;
+
+    this.emit('tick', {
+        counter: counter,
+        periods: periods
+    });
+
+    var value, name, duration;
+    for (name in periods) {
+        duration = periods[name].duration;
+        value = ((counter % duration) || duration) / duration;
+        periods[name].value = value;
+    }
+
+    for (name in periods) {
+        if (periods[name].value >= 1) {
+            this.emit('period:' + name);
+        }
+    }
+
+    this.counter = counter;
+};
+
+Ticker.prototype.addPeriod = function (name, duration) {
+    this.periods[name] = {
+        duration: duration,
+        value: 0
+    };
+};
+
+Ticker.prototype.emit = function (type) {
+    EventEmitter.prototype.emit.apply(this, arguments);
 };
