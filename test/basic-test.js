@@ -7,6 +7,7 @@ describe('Ticker', function () {
         });
 
         ticker.on('tick', function () {
+            ticker.stop();
             done();
         });
 
