@@ -30,8 +30,9 @@ Ticker.prototype.stop = function () {
 };
 
 Ticker.prototype.processTick = function () {
+    var clock = this.clock;
     var periods = this.periods;
-    var counter = this.counter + this.clock;
+    var counter = this.counter + clock;
 
     this.emit('tick', {
         counter: counter,
@@ -41,13 +42,14 @@ Ticker.prototype.processTick = function () {
     var value, name, duration;
     for (name in periods) {
         duration = periods[name].duration;
-        value = ((counter % duration) || duration) / duration;
+        value = periods[name].value + clock / duration;
         periods[name].value = value;
     }
 
     for (name in periods) {
         if (periods[name].value >= 1) {
             this.emit('period:' + name);
+            periods[name].value -= 1;
         }
     }
 

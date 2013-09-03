@@ -19,22 +19,22 @@ describe('Ticker', function () {
             clock: 5
         });
 
-        var emitPeriod = false;
+        var prevValue = 0;
 
         ticker.addPeriod('hoge', 20);
-
-        ticker.on('period:hoge', function () {
-            emitPeriod = true;
-        });
 
         ticker.on('tick', function (e) {
             var value = e.periods['hoge'].value;
 
-            if (value >= 1) {
-                assert(emitPeriod);
-                ticker.stop();
-                done();
-            }
+            assert(0 <= value);
+            assert(prevValue <= value);
+
+            prevValue = value;
+        });
+
+        ticker.on('period:hoge', function () {
+            ticker.stop();
+            done();
         });
 
         ticker.start();
@@ -46,22 +46,22 @@ describe('Ticker', function () {
             clock: 11
         });
 
-        var emitPeriod = false;
+        var prevValue = 0;
 
         ticker.addPeriod('hoge', 20);
-
-        ticker.on('period:hoge', function () {
-            emitPeriod = true;
-        });
 
         ticker.on('tick', function (e) {
             var value = e.periods['hoge'].value;
 
-            if (value >= 1) {
-                assert(emitPeriod);
-                ticker.stop();
-                done();
-            }
+            assert(0 <= value);
+            assert(prevValue <= value);
+
+            prevValue = value;
+        });
+
+        ticker.on('period:hoge', function () {
+            ticker.stop();
+            done();
         });
 
         ticker.start();
