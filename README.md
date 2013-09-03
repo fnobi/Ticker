@@ -30,3 +30,23 @@ ticker.on('tick', function () {
 
 ticker.start();
 ```
+
+### use period
+```
+var ticker = new Ticker({
+  clock: 20
+});
+
+ticker.addPeriod('hoge', 2000);
+
+ticker.on('period:hoge', function () {
+  // emmit per 2000ms!
+});
+
+ticker.on('tick', function (e) {
+  var value = e.periods['hoge'].value;
+  // value == (totalMS % 2000) / 2000
+});
+
+ticker.start();
+```

@@ -16,6 +16,10 @@
   "gitHead": "3514dff9acf322c9a10d4e0f0501b0bef48524d5",
   "devDependencies": {
     "grunt": "~0.4.1",
-    "grunt-release": "~0.5.1"
+    "grunt-release": "~0.5.1",
+    "grunt-mocha-html": "0.0.1",
+    "grunt-mocha-phantomjs": "~0.2.8",
+    "mocha": "~1.9.0",
+    "chai": "~1.6.1"
   }
 }
