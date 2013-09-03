@@ -6,9 +6,27 @@ module.exports = function(grunt) {
                 file: 'bower.json',
                 npm: false
             }
+        },
+        mocha_html : {
+            all: {
+                src   : [
+                    'bower_components/EventEmitter/EventEmitter.js',
+                    'bower_components/inherits/inherits.js',
+                    'Ticker.js'
+                ],
+                test  : [ 'test/*-test.js' ],
+                assert : 'chai'
+            }
+        },
+        mocha_phantomjs : {
+            all: [ 'test/*.html' ]
         }
     });
 
+
     grunt.loadNpmTasks('grunt-release');
+    grunt.loadNpmTasks('grunt-mocha-html');
+    grunt.loadNpmTasks('grunt-mocha-phantomjs');
     grunt.registerTask('default', ['release:patch']);
+    grunt.registerTask('test', ['mocha_html', 'mocha_phantomjs']);
 };
