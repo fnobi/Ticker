@@ -10,7 +10,7 @@
     "tests"
   ],
   "dependencies": {
-    "EventEmitter": "~0.0.0",
+    "EventEmitter": "~1.0.0",
     "inherits": "~0.0.1"
   }
 }
