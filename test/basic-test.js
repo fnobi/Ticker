@@ -2,11 +2,16 @@ var assert = chai.assert;
 
 describe('Ticker', function () {
     it('emit tick', function (done) {
+        var clock = 20;
+
         var ticker = new Ticker({
-            clock: 20
+            clock: clock
         });
 
-        ticker.on('tick', function () {
+        ticker.on('tick', function (e) {
+            assert(clock <= e.time);
+            assert(e.time < clock * 2);
+
             ticker.stop();
             done();
         });
@@ -15,21 +20,24 @@ describe('Ticker', function () {
     });
 
     it('emit period', function (done) {
+        var clock = 10;
+        var periodDuration = 50;
+
         var ticker = new Ticker({
-            clock: 5
+            clock: clock
         });
 
-        var prevValue = 0;
+        var counter = 0;
 
-        ticker.addPeriod('hoge', 20);
+        ticker.addPeriod('hoge', periodDuration);
 
         ticker.on('tick', function (e) {
             var value = e.periods['hoge'].value;
 
-            assert(0 <= value);
-            assert(prevValue <= value);
+            assert(counter * clock / periodDuration <= value);
+            assert(value < (counter + 1) * clock / periodDuration);
 
-            prevValue = value;
+            counter++;
         });
 
         ticker.on('period:hoge', function () {
@@ -42,21 +50,24 @@ describe('Ticker', function () {
 
 
     it('emit period (indivisible)', function (done) {
+        var clock = 11;
+        var periodDuration = 50;
+
         var ticker = new Ticker({
-            clock: 11
+            clock: clock
         });
 
-        var prevValue = 0;
+        var counter = 0;
 
-        ticker.addPeriod('hoge', 20);
+        ticker.addPeriod('hoge', periodDuration);
 
         ticker.on('tick', function (e) {
             var value = e.periods['hoge'].value;
 
-            assert(0 <= value);
-            assert(prevValue <= value);
+            assert(counter * clock / periodDuration <= value);
+            assert(value < (counter + 1) * clock / periodDuration);
 
-            prevValue = value;
+            counter++;
         });
 
         ticker.on('period:hoge', function () {
@@ -67,14 +78,3 @@ describe('Ticker', function () {
         ticker.start();
     });
 });
-
-
-
-
-
-
-
-
-
-
-
