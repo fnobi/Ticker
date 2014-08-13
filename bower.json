@@ -1,6 +1,6 @@
 {
   "name": "Ticker",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "main": "Ticker.js",
   "ignore": [
     "**/.*",
@@ -10,7 +10,6 @@
     "tests"
   ],
   "dependencies": {
-    "EventEmitter": "~1.0.0",
-    "inherits": "~0.0.1"
+    "event-trigger": "~0.1.1"
   }
 }
