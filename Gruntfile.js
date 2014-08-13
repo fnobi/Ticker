@@ -10,8 +10,7 @@ module.exports = function(grunt) {
         mocha_html : {
             all: {
                 src   : [
-                    'bower_components/EventEmitter/EventEmitter.js',
-                    'bower_components/inherits/inherits.js',
+                    'bower_components/event-trigger/src/js/EventTrigger.js',
                     'Ticker.js'
                 ],
                 test  : [ 'test/*-test.js' ],

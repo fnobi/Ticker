@@ -7,7 +7,7 @@ var Ticker = function (opts) {
 
     this.initLoop();
 };
-inherits(Ticker, EventEmitter);
+Ticker = EventTrigger.extend(Ticker);
 
 Ticker.prototype.initLoop = function () {
     this.loop = null;
@@ -74,5 +74,5 @@ Ticker.prototype.initPeriod = function (name) {
 };
 
 Ticker.prototype.emit = function (type) {
-    EventEmitter.prototype.emit.apply(this, arguments);
+    EventTrigger.prototype.emit.apply(this, arguments);
 };
