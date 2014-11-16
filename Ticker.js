@@ -17,6 +17,7 @@ Ticker.prototype.start = function () {
     var instance = this;
     
     this.startTime = +(new Date());
+    this.prevTime = this.startTime;
 
     this.loop = setInterval(function () {
         instance.processTick();
@@ -39,7 +40,7 @@ Ticker.prototype.processTick = function () {
     var e = {
         time: currentTime - this.startTime,
         periods: periods,
-        delta: currentTime - (isNaN(this.prevTime) ? this.startTime : this.prevTime)
+        delta: currentTime - this.prevTime
     };
 
     this.emit('tick', e);
