@@ -38,12 +38,9 @@ Ticker.prototype.processTick = function () {
 
     var e = {
         time: currentTime - this.startTime,
-        periods: periods
+        periods: periods,
+        delta: currentTime - (isNaN(this.prevTime) ? this.startTime : this.prevTime)
     };
-
-    if (!isNaN(this.prevTime)) {
-        e.delta = currentTime - this.prevTime;
-    }
 
     this.emit('tick', e);
 

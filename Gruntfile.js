@@ -26,6 +26,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-release');
     grunt.loadNpmTasks('grunt-mocha-html');
     grunt.loadNpmTasks('grunt-mocha-phantomjs');
-    grunt.registerTask('default', ['release:patch']);
+    grunt.registerTask('default', []);
     grunt.registerTask('test', ['mocha_html', 'mocha_phantomjs']);
 };
