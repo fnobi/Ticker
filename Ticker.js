@@ -14,12 +14,12 @@ Ticker.prototype.initLoop = function () {
 };
 
 Ticker.prototype.start = function () {
-    var self = this;
+    var instance = this;
     
     this.startTime = +(new Date());
 
     this.loop = setInterval(function () {
-        self.processTick();
+        instance.processTick();
     }, this.clock);
 };
 
@@ -36,10 +36,16 @@ Ticker.prototype.processTick = function () {
     var periods = this.periods;
     var currentTime = +(new Date());
 
-    this.emit('tick', {
+    var e = {
         time: currentTime - this.startTime,
         periods: periods
-    });
+    };
+
+    if (!isNaN(this.prevTime)) {
+        e.delta = currentTime - this.prevTime;
+    }
+
+    this.emit('tick', e);
 
     var value, name, duration;
     for (name in periods) {
@@ -54,6 +60,8 @@ Ticker.prototype.processTick = function () {
             periods[name].value -= 1;
         }
     }
+
+    this.prevTime = currentTime;
 };
 
 Ticker.prototype.addPeriod = function (name, duration) {
