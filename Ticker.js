@@ -1,5 +1,6 @@
 var Ticker = function (opts) {
     this.clock = opts.clock || 20;
+    this.auto = !!opts.auto;
 
     this.startTime = null;
 
@@ -81,4 +82,20 @@ Ticker.prototype.initPeriod = function (name) {
 
 Ticker.prototype.emit = function (type) {
     EventTrigger.prototype.emit.apply(this, arguments);
+};
+
+Ticker.prototype.on = function (type) {
+    var li = this._listeners;
+    if (type == 'tick' && this.auto && (!li || !li['tick'] || !li['tick'].length)) {
+        this.start();
+    }
+    EventTrigger.prototype.on.apply(this, arguments);
+};
+
+Ticker.prototype.off = function (type) {
+    EventTrigger.prototype.off.apply(this, arguments);
+    var li = this._listeners;
+    if (type == 'tick' && this.auto && (!li || !li['tick'] || !li['tick'].length)) {
+        this.stop();
+    }
 };
