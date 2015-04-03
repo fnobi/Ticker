@@ -27,8 +27,6 @@ ticker.on('tick', function () {
   seconds++;
   console.log(seconds);
 });
-
-ticker.start();
 ```
 
 ### use period
@@ -47,8 +45,6 @@ ticker.on('tick', function (e) {
   var value = e.periods['hoge'].value;
   // value == (totalMS % 2000) / 2000
 });
-
-ticker.start();
 ```
 
 ### use `requestAnimationFrame`
