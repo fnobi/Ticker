@@ -1,6 +1,7 @@
 var Ticker = function (opts) {
+    var undef;
     this.clock = opts.clock || 20;
-    this.auto = !!opts.auto;
+    this.auto = (opts.auto === undef) ? true : opts.auto;
     this.useRAF = !!opts.useRAF && this.getRAF();
 
     this.loop = null;
