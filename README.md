@@ -50,3 +50,10 @@ ticker.on('tick', function (e) {
 
 ticker.start();
 ```
+
+### use `requestAnimationFrame`
+```
+var ticker = new Ticker({
+  useRAF: true
+});
+``
