@@ -56,4 +56,4 @@ ticker.start();
 var ticker = new Ticker({
   useRAF: true
 });
-``
+```
