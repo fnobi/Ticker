@@ -1,7 +1,9 @@
 var Ticker = function (opts) {
     this.clock = opts.clock || 20;
     this.auto = !!opts.auto;
+    this.useRAF = !!opts.useRAF && this.getRAF();
 
+    this.loop = null;
     this.startTime = null;
 
     this.periods = {};
@@ -20,16 +22,30 @@ Ticker.prototype.start = function () {
     this.startTime = +(new Date());
     this.prevTime = this.startTime;
 
-    this.loop = setInterval(function () {
-        instance.processTick();
-    }, this.clock);
+    if (this.useRAF) {
+        var raf = this.getRAF();
+        this.loop = function () {
+            instance.processTick();
+            if (instance.loop) {
+                raf(instance.loop);
+            }
+        };
+        raf(this.loop);
+    } else {
+        this.loop = setInterval(function () {
+            instance.processTick();
+        }, this.clock);
+    }
 };
 
 Ticker.prototype.stop = function () {
     if (!this.loop) {
         return;
     }
-    clearInterval(this.loop);
+    if (!this.useRAF) {
+        clearInterval(this.loop);
+    }
+    this.loop = null;
     this.initLoop();
 };
 
@@ -98,4 +114,11 @@ Ticker.prototype.off = function (type) {
     if (type == 'tick' && this.auto && (!li || !li['tick'] || !li['tick'].length)) {
         this.stop();
     }
+};
+
+Ticker.prototype.getRAF = function () {
+    return window.requestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.msRequestAnimationFrame;
 };

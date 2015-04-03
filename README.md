@@ -16,7 +16,7 @@ git clone https://github.com/fnobi/Ticker.git
 ```
 
 ## usage
-```
+```javascript
 var seconds = 0;
 
 var ticker = new Ticker({
@@ -32,7 +32,7 @@ ticker.start();
 ```
 
 ### use period
-```
+```javascript
 var ticker = new Ticker({
   clock: 20
 });
@@ -49,4 +49,11 @@ ticker.on('tick', function (e) {
 });
 
 ticker.start();
+```
+
+### use `requestAnimationFrame`
+```javascript
+var ticker = new Ticker({
+  useRAF: true
+});
 ```
